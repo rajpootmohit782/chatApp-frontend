@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './css/signupPage.css';
+import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
   const [name, setName] = useState('');
@@ -40,7 +42,26 @@ const SignupPage = () => {
     console.log('Email:', email);
     console.log('Phone:', phone);
     console.log('Password:', password);
+
+    adduser()
+
   };
+
+  const adduser = async()=> {
+    const obj = {
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    };
+  console.log(obj)
+      try{
+        const response = await axios.post('https://4mxs3s-3000.csb.app/signup', obj);
+        console.log(response)
+      }catch(err){
+          console.log(err)
+      }
+  }
 
   return (
     <div className="signup-container">
@@ -85,6 +106,7 @@ const SignupPage = () => {
         {passwordError && <p className="error-message">{passwordError}</p>}
       </div>
       <button onClick={handleSignup}>Sign Up</button>
+      <button ><Link to="/login">Go to Login</Link></button>
     </div>
   );
 };
